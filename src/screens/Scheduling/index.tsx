@@ -15,6 +15,7 @@ import {
 } from "./styles";
 
 import BackButton from "../../components/BackButton";
+import Calendar from "../../components/Calendar";
 
 import ArrowSvg from "../../assets/arrow.svg";
 import Button from "../../components/Button";
@@ -50,7 +51,9 @@ function Scheduling() {
         </RentalPeriod>
       </Header>
 
-      <Content></Content>
+      <Content>
+        <Calendar />
+      </Content>
 
       <Footer>
         <Button title="Confirmar" />
