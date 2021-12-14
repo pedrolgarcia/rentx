@@ -29,9 +29,9 @@ interface Props {
   data: CarData;
 }
 
-function Car({ data }: Props) {
+function Car({ data, ...rest }: Props) {
   return (
-    <Container>
+    <Container {...rest}>
       <Details>
         <Brand>{data.brand}</Brand>
         <Name>{data.name}</Name>
