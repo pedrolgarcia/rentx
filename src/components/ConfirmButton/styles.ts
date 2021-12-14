@@ -9,8 +9,7 @@ export const Container = styled(RectButton)`
   align-items: center;
   justify-content: center;
 
-  background-color: ${({ color, theme }) =>
-    color ? color : theme.colors.shape_dark};
+  background-color: ${({ theme }) => theme.colors.shape_dark};
 `;
 
 export const Title = styled.Text`

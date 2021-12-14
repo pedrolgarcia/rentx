@@ -1,4 +1,5 @@
 import React from "react";
+import { StatusBar } from "expo-status-bar";
 import { useWindowDimensions } from "react-native";
 
 import { Container, Content, Title, Message, Footer } from "./styles";
@@ -12,6 +13,7 @@ function SchedulingComplete() {
 
   return (
     <Container>
+      <StatusBar translucent style="light" backgroundColor="transparent" />
       <LogoSvg width={width} />
       <Content>
         <DoneSvg width={80} height={80} />
