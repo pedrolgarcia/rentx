@@ -15,23 +15,16 @@ import {
 
 import GasolineSvg from "../../assets/gasoline.svg";
 
-interface CarData {
-  brand: string;
-  name: string;
-  rent: {
-    period: string;
-    price: number;
-  };
-  thumbnail: string;
-}
+import { CarDTO } from "../../dtos/CarDTO";
 
 interface Props {
-  data: CarData;
+  data: CarDTO;
+  onPress: () => void;
 }
 
-function Car({ data, ...rest }: Props) {
+function Car({ data, onPress, ...rest }: Props) {
   return (
-    <Container {...rest}>
+    <Container onPress={onPress} {...rest}>
       <Details>
         <Brand>{data.brand}</Brand>
         <Name>{data.name}</Name>
