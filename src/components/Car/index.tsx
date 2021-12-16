@@ -15,6 +15,8 @@ import {
 
 import GasolineSvg from "../../assets/gasoline.svg";
 
+import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
+
 import { CarDTO } from "../../dtos/CarDTO";
 
 interface Props {
@@ -23,6 +25,8 @@ interface Props {
 }
 
 function Car({ data, onPress, ...rest }: Props) {
+  const MotorIcon = getAccessoryIcon(data.fuel_type);
+
   return (
     <Container onPress={onPress} {...rest}>
       <Details>
@@ -36,7 +40,7 @@ function Car({ data, onPress, ...rest }: Props) {
           </Rent>
 
           <Type>
-            <GasolineSvg />
+            <MotorIcon />
           </Type>
         </About>
       </Details>
