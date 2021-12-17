@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StatusBar } from "react-native";
 import { useTheme } from "styled-components";
 import { useNavigation } from "@react-navigation/native";
@@ -15,18 +15,44 @@ import {
   Footer,
 } from "./styles";
 
+import Button from "../../components/Button";
 import BackButton from "../../components/BackButton";
-import Calendar from "../../components/Calendar";
+import Calendar, { DayProps, MarkedDateProps } from "../../components/Calendar";
+import { generateInterval } from "../../components/Calendar/generateInterval";
 
 import ArrowSvg from "../../assets/arrow.svg";
-import Button from "../../components/Button";
 
 function Scheduling() {
   const theme = useTheme();
   const navigation = useNavigation();
 
+  const [lastSelectedDate, setLastSelectedDate] = useState<DayProps>(
+    {} as DayProps
+  );
+  const [markedDates, setMarkedDates] = useState<MarkedDateProps>(
+    {} as MarkedDateProps
+  );
+
   function handleConfirmRental() {
     navigation.navigate("SchedulingDetails");
+  }
+
+  function handleBack() {
+    navigation.goBack();
+  }
+
+  function handleChangeDate(date: DayProps) {
+    let start = !lastSelectedDate.timestamp ? date : lastSelectedDate;
+    let end = date;
+
+    if (start.timestamp > end.timestamp) {
+      start = end;
+      end = start;
+    }
+
+    setLastSelectedDate(end);
+    const interval = generateInterval(start, end);
+    setMarkedDates(interval);
   }
 
   return (
@@ -37,7 +63,7 @@ function Scheduling() {
         backgroundColor="transparent"
       />
       <Header>
-        <BackButton onPress={() => {}} color={theme.colors.shape} />
+        <BackButton onPress={handleBack} color={theme.colors.shape} />
         <Title>
           Escolha uma{"\n"}data de início e{"\n"}fim do aluguel
         </Title>
@@ -58,7 +84,7 @@ function Scheduling() {
       </Header>
 
       <Content>
-        <Calendar />
+        <Calendar markedDates={markedDates} onDayPress={handleChangeDate} />
       </Content>
 
       <Footer>
