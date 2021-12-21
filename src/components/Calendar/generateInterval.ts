@@ -9,7 +9,7 @@ export function generateInterval(start: DayProps, end: DayProps) {
   eachDayOfInterval({
     start: new Date(start.timestamp),
     end: new Date(end.timestamp),
-  }).forEach(({ item }: any) => {
+  }).forEach((item: any) => {
     const date = format(getPlatformDate(item), "yyyy-MM-dd");
 
     interval = {
@@ -19,7 +19,8 @@ export function generateInterval(start: DayProps, end: DayProps) {
           start.dateString === date || end.dateString === date
             ? theme.colors.main
             : theme.colors.main_light,
-        selectedTextColor:
+        // @ts-ignore
+        textColor:
           start.dateString === date || end.dateString === date
             ? theme.colors.main_light
             : theme.colors.main,

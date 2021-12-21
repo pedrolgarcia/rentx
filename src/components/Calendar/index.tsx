@@ -4,8 +4,8 @@ import { Feather } from "@expo/vector-icons";
 import {
   Calendar as CustomCalendar,
   LocaleConfig,
+  CalendarProps,
 } from "react-native-calendars";
-import { DateData } from "react-native-calendars/src/types";
 import { MarkingProps } from "react-native-calendars/src/calendar/day/marking";
 
 import { ptBR } from "./localeConfig";
@@ -23,11 +23,6 @@ export interface DayProps {
   month: number;
   year: number;
   timestamp: number;
-}
-
-interface CalendarProps {
-  markedDates: MarkedDateProps;
-  onDayPress: (date?: DateData) => void;
 }
 
 function Calendar({ markedDates, onDayPress }: CalendarProps) {
