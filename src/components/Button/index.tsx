@@ -6,14 +6,20 @@ import { Container, Title } from "./styles";
 interface ButtonProps {
   title: string;
   color?: string;
+  enabled?: boolean;
   onPress: () => void;
 }
 
-function Button({ title, color, onPress }: ButtonProps) {
+function Button({ title, color, enabled = true, onPress }: ButtonProps) {
   const theme = useTheme();
 
   return (
-    <Container color={color ? color : theme.colors.main} onPress={onPress}>
+    <Container
+      color={color ? color : theme.colors.main}
+      onPress={onPress}
+      enabled={enabled}
+      style={{ opacity: enabled ? 1 : 0.5 }}
+    >
       <Title>{title}</Title>
     </Container>
   );
