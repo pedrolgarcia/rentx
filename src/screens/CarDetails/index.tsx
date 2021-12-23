@@ -25,6 +25,7 @@ import Button from "../../components/Button";
 
 import { CarDTO } from "../../dtos/CarDTO";
 import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
+import { StatusBar } from "react-native";
 interface Params {
   car: CarDTO;
 }
@@ -45,6 +46,12 @@ function CarDetails() {
 
   return (
     <Container>
+      <StatusBar
+        barStyle="dark-content"
+        translucent
+        backgroundColor="transparent"
+      />
+
       <Header>
         <BackButton onPress={handleBack} />
       </Header>
