@@ -8,6 +8,7 @@ import Animated, {
   runOnJS,
 } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
+import { StatusBar } from "react-native";
 
 import { Container } from "./styles";
 
@@ -64,6 +65,12 @@ function Splash() {
 
   return (
     <Container>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
+      />
+
       <Animated.View style={[brandStyle, { position: "absolute" }]}>
         <BrandSvg width={80} height={50} />
       </Animated.View>
