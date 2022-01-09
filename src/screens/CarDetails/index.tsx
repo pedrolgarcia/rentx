@@ -1,5 +1,12 @@
 import React from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  Extrapolate,
+  interpolate,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from "react-native-reanimated";
 
 import {
   CarImages,
@@ -16,6 +23,7 @@ import {
   Accessories,
   About,
   Footer,
+  HeaderContainer,
 } from "./styles";
 
 import BackButton from "../../components/BackButton";
@@ -26,6 +34,7 @@ import Button from "../../components/Button";
 import { CarDTO } from "../../dtos/CarDTO";
 import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
 import { StatusBar } from "react-native";
+
 interface Params {
   car: CarDTO;
 }
@@ -35,6 +44,28 @@ function CarDetails() {
 
   const route = useRoute();
   const { car } = route.params as Params;
+
+  const scrollY = useSharedValue(0);
+  const scrollHandler = useAnimatedScrollHandler((event) => {
+    scrollY.value = event.contentOffset.y;
+  });
+
+  const headerStyleAnimation = useAnimatedStyle(() => {
+    return {
+      height: interpolate(
+        scrollY.value,
+        [0, 200],
+        [200, 80],
+        Extrapolate.CLAMP
+      ),
+    };
+  });
+
+  const sliderCarsStyleAnimation = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(scrollY.value, [0, 150], [1, 0]),
+    };
+  });
 
   function handleConfirmRental() {
     navigation.navigate("Scheduling", { car });
@@ -52,15 +83,17 @@ function CarDetails() {
         backgroundColor="transparent"
       />
 
-      <Header>
-        <BackButton onPress={handleBack} />
-      </Header>
+      <HeaderContainer style={headerStyleAnimation}>
+        <Header>
+          <BackButton onPress={handleBack} />
+        </Header>
 
-      <CarImages>
-        <ImageSlider imagesUrl={car.photos} />
-      </CarImages>
+        <CarImages style={sliderCarsStyleAnimation}>
+          <ImageSlider imagesUrl={car.photos} />
+        </CarImages>
+      </HeaderContainer>
 
-      <Content>
+      <Content onScroll={scrollHandler} scrollEventThrottle={16}>
         <Details>
           <Description>
             <Brand>{car.brand}</Brand>
@@ -83,6 +116,12 @@ function CarDetails() {
           ))}
         </Accessories>
 
+        <About>{car.about}</About>
+        <About>{car.about}</About>
+        <About>{car.about}</About>
+        <About>{car.about}</About>
+        <About>{car.about}</About>
+        <About>{car.about}</About>
         <About>{car.about}</About>
       </Content>
 

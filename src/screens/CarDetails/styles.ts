@@ -1,12 +1,22 @@
+import { RectButton } from "react-native-gesture-handler";
 import {
   getBottomSpace,
   getStatusBarHeight,
 } from "react-native-iphone-x-helper";
+import Animated from "react-native-reanimated";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
 export const Container = styled.View`
   flex: 1;
+  background-color: ${({ theme }) => theme.colors.background_secondary};
+`;
+
+export const HeaderContainer = styled(Animated.View)`
+  position: absolute;
+  overflow: hidden;
+  z-index: 1;
+
   background-color: ${({ theme }) => theme.colors.background_secondary};
 `;
 
@@ -20,14 +30,14 @@ export const Header = styled.View`
   margin-left: 24px;
 `;
 
-export const CarImages = styled.View`
+export const CarImages = styled(Animated.View)`
   margin-top: ${getStatusBarHeight() + 32}px;
 `;
 
-export const Content = styled.ScrollView.attrs({
+export const Content = styled(Animated.ScrollView).attrs({
   contentContainerStyle: {
-    padding: 24,
-    alignItems: "center",
+    paddingHorizontal: 24,
+    paddingTop: getStatusBarHeight() + 160,
   },
   showsVerticalScrollIndicator: false,
 })``;
