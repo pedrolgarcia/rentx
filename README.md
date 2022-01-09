@@ -9,7 +9,7 @@
 
 <p align="center"><b>Capítulo 03: rentx</b></p>
 
-# gofinances
+# rentx
 
 ### 💡 Ideia
 
