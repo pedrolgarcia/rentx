@@ -9,6 +9,8 @@ interface ButtonProps {
   color?: string;
   enabled?: boolean;
   loading?: boolean;
+  light?: boolean;
+  mb?: number;
   onPress: () => void;
 }
 
@@ -17,6 +19,8 @@ function Button({
   color,
   enabled = true,
   loading = false,
+  light = false,
+  mb = 0,
   onPress,
 }: ButtonProps) {
   const theme = useTheme();
@@ -26,12 +30,18 @@ function Button({
       color={color ? color : theme.colors.main}
       onPress={onPress}
       enabled={enabled}
-      style={{ opacity: enabled === false || loading === true ? 0.5 : 1 }}
+      style={{
+        opacity: enabled === false || loading === true ? 0.5 : 1,
+        marginBottom: mb,
+      }}
     >
       {loading ? (
-        <ActivityIndicator size="small" color={theme.colors.shape} />
+        <ActivityIndicator
+          size="small"
+          color={light ? theme.colors.header : theme.colors.shape}
+        />
       ) : (
-        <Title>{title}</Title>
+        <Title light={light}>{title}</Title>
       )}
     </Container>
   );
