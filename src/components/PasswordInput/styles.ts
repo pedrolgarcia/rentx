@@ -1,3 +1,4 @@
+import { BorderlessButton } from "react-native-gesture-handler";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
@@ -28,4 +29,18 @@ export const InputText = styled.TextInput`
   font-size: ${RFValue(15)}px;
 
   padding: 0 23px;
+`;
+
+export const PasswordVisibilityButton = styled(BorderlessButton)``;
+
+export const PassIconContainer = styled.View`
+  height: 56px;
+  width: 50px;
+
+  justify-content: center;
+  align-items: center;
+
+  padding-right: 16px;
+
+  background-color: ${({ theme }) => theme.colors.background_secondary};
 `;

@@ -6,6 +6,7 @@ import { Container, Header, Title, SubTitle, Form, Footer } from "./styles";
 
 import Button from "../../components/Button";
 import Input from "../../components/Input";
+import PasswordInput from "../../components/PasswordInput";
 
 function SignIn() {
   const { colors } = useTheme();
@@ -25,7 +26,15 @@ function SignIn() {
       </Header>
 
       <Form>
-        <Input />
+        <Input
+          iconName="mail"
+          placeholder="E-mail"
+          keyboardType="email-address"
+          autoCorrect={false}
+          autoCapitalize="none"
+        />
+
+        <PasswordInput iconName="lock" placeholder="Senha" />
       </Form>
 
       <Footer>
