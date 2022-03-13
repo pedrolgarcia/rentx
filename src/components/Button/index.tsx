@@ -1,25 +1,24 @@
 import React from "react";
 import { ActivityIndicator } from "react-native";
+import { RectButtonProps } from "react-native-gesture-handler";
 import { useTheme } from "styled-components";
 
 import { Container, Title } from "./styles";
 
-interface ButtonProps {
+interface ButtonProps extends RectButtonProps {
   title: string;
   color?: string;
-  enabled?: boolean;
   loading?: boolean;
   light?: boolean;
   mb?: number;
-  onPress: () => void;
 }
 
 function Button({
   title,
   color,
-  enabled = true,
   loading = false,
   light = false,
+  enabled = true,
   mb = 0,
   onPress,
 }: ButtonProps) {
