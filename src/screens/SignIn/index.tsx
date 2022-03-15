@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import {
+  Alert,
   Keyboard,
   KeyboardAvoidingView,
   StatusBar,
   TouchableWithoutFeedback,
 } from "react-native";
 import { useTheme } from "styled-components";
+import * as Yup from "yup";
+import { useNavigation } from "@react-navigation/native";
 
 import { Container, Header, Title, SubTitle, Form, Footer } from "./styles";
 
@@ -14,10 +17,38 @@ import Input from "../../components/Input";
 import PasswordInput from "../../components/PasswordInput";
 
 function SignIn() {
+  const navigation = useNavigation();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const { colors } = useTheme();
+
+  async function handleSignIn() {
+    try {
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .required("E-mail obrigatório")
+          .email("Digite um e-mail válido"),
+        password: Yup.string().required("Senha é obrigatória"),
+      });
+
+      await schema.validate({ email, password });
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        Alert.alert("Opa", error?.message);
+      } else {
+        Alert.alert(
+          "Erro na autenticação",
+          "Ocorreu um erro ao fazer login, verifique as credenciais."
+        );
+      }
+    }
+  }
+
+  function handleNewAccount() {
+    navigation.navigate("SignUpFirstStep");
+  }
 
   return (
     <KeyboardAvoidingView behavior="position" enabled>
@@ -58,8 +89,8 @@ function SignIn() {
           <Footer>
             <Button
               title="Login"
-              onPress={() => {}}
-              enabled={false}
+              onPress={handleSignIn}
+              enabled={true}
               loading={false}
               mb={8}
             />
@@ -68,8 +99,8 @@ function SignIn() {
               title="Criar uma conta gratuita"
               color={colors.background_secondary}
               light
-              onPress={() => {}}
-              enabled={false}
+              onPress={handleNewAccount}
+              enabled={true}
               loading={false}
             />
           </Footer>
