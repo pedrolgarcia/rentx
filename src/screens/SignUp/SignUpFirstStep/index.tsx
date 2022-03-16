@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import { Container, Header } from "./styles";
+import { Container, Header, Steps, Title, SubTitle } from "./styles";
 
 import BackButton from "../../../components/BackButton";
 import Bullet from "../../../components/Bullet";
@@ -17,8 +17,14 @@ function SignUpFirstStep() {
     <Container>
       <Header>
         <BackButton onPress={handleBack} />
-        <Bullet active={false} />
+        <Steps>
+          <Bullet active />
+          <Bullet />
+        </Steps>
       </Header>
+
+      <Title>Crie sua{"\n"}conta</Title>
+      <SubTitle>Faça seu cadastro de{"\n"}forma rápida e fácil.</SubTitle>
     </Container>
   );
 }
