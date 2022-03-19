@@ -54,7 +54,6 @@ function SignUpFirstStep() {
         return Alert.alert("Opa", error.message);
       }
     }
-    navigation.navigate("SignUpSecondStep");
   }
 
   return (
