@@ -83,6 +83,7 @@ function SignUpFirstStep() {
               iconName="mail"
               placeholder="E-mail"
               keyboardType="email-address"
+              autoCapitalize="none"
               value={email}
               onChangeText={setEmail}
             />
