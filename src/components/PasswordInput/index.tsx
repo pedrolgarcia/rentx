@@ -53,7 +53,7 @@ function PasswordInput({ iconName, value, ...rest }: Props) {
         isFocused={isFocused}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
-        secureTextEntry={isPasswordVisible}
+        secureTextEntry={!isPasswordVisible}
         {...rest}
       />
 
@@ -63,7 +63,7 @@ function PasswordInput({ iconName, value, ...rest }: Props) {
       >
         <PassIconContainer isFocused={isFocused}>
           <Feather
-            name={isPasswordVisible ? "eye" : "eye-off"}
+            name={!isPasswordVisible ? "eye" : "eye-off"}
             size={24}
             color={theme.colors.text_detail}
           />
