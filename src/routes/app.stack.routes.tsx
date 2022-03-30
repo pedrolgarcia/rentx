@@ -12,12 +12,12 @@ const { Navigator, Screen } = createStackNavigator();
 function AppStackRoutes() {
   return (
     <Navigator
-      initialRouteName="Home"
+      initialRouteName="CarList"
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Screen name="Home" component={Home} />
+      <Screen name="CarList" component={Home} />
       <Screen name="CarDetails" component={CarDetails} />
       <Screen name="Scheduling" component={Scheduling} />
       <Screen name="SchedulingDetails" component={SchedulingDetails} />

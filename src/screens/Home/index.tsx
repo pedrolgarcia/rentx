@@ -21,18 +21,24 @@ function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isMounted = true
+    
     async function fetchCars() {
       try {
         const response = await api.get("/cars");
-        setCars(response.data);
+        isMounted && setCars(response.data);
       } catch (error) {
         console.log(error);
       } finally {
-        setLoading(false);
+        isMounted && setLoading(false);
       }
     }
 
     fetchCars();
+
+    return () => {
+      isMounted = false
+    }
   }, []);
 
   useEffect(() => {
