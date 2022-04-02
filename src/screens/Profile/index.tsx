@@ -8,6 +8,7 @@ import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useTheme } from "styled-components";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 
 import {
   Container,
@@ -29,11 +30,18 @@ import BackButton from "../../components/BackButton";
 import Input from "../../components/Input";
 import PasswordInput from "../../components/PasswordInput";
 
+import { useAuth } from "../../hooks/auth";
+
 function Profile() {
   const theme = useTheme();
   const navigation = useNavigation();
 
+  const { user } = useAuth();
+
   const [option, setOption] = useState<"dataEdit" | "passwordEdit">("dataEdit");
+  const [avatar, setAvatar] = useState(user?.avatar);
+  const [name, setName] = useState(user?.name);
+  const [driverLicense, setDriverLicense] = useState(user?.driver_license);
 
   function handleBack() {
     navigation.goBack();
@@ -43,6 +51,19 @@ function Profile() {
 
   function handleOptionChange(optionSelected: "dataEdit" | "passwordEdit") {
     setOption(optionSelected);
+  }
+
+  async function handleSelectAvatar() {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+
+    if (result.cancelled) return;
+
+    if (result.uri) setAvatar(result.uri);
   }
 
   return (
@@ -61,12 +82,14 @@ function Profile() {
             </HeaderTop>
 
             <PhotoContainer>
-              <Photo
-                source={{
-                  uri: "https://avatars.githubusercontent.com/u/29722492?v=4",
-                }}
-              />
-              <PhotoButton onPress={() => {}}>
+              {!!avatar && (
+                <Photo
+                  source={{
+                    uri: avatar,
+                  }}
+                />
+              )}
+              <PhotoButton onPress={handleSelectAvatar}>
                 <Feather name="camera" size={24} color={theme.colors.shape} />
               </PhotoButton>
             </PhotoContainer>
@@ -92,12 +115,24 @@ function Profile() {
 
             {option == "dataEdit" ? (
               <Section>
-                <Input iconName="user" placeholder="Nome" autoCorrect={false} />
-                <Input iconName="mail" editable={false} />
                 <Input
+                  defaultValue={user.name}
+                  iconName="user"
+                  placeholder="Nome"
+                  autoCorrect={false}
+                  onChangeText={setName}
+                />
+                <Input
+                  defaultValue={user.email}
+                  iconName="mail"
+                  editable={false}
+                />
+                <Input
+                  defaultValue={user.driver_license}
                   iconName="credit-card"
                   placeholder="CNH"
                   keyboardType="numeric"
+                  onChangeText={setDriverLicense}
                 />
               </Section>
             ) : (
