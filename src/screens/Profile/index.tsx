@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  Alert,
   Keyboard,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
@@ -9,6 +10,7 @@ import { useTheme } from "styled-components";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import * as Yup from "yup";
 
 import {
   Container,
@@ -27,6 +29,7 @@ import {
 } from "./styles";
 
 import BackButton from "../../components/BackButton";
+import Button from "../../components/Button";
 import Input from "../../components/Input";
 import PasswordInput from "../../components/PasswordInput";
 
@@ -36,7 +39,7 @@ function Profile() {
   const theme = useTheme();
   const navigation = useNavigation();
 
-  const { user, signOut } = useAuth();
+  const { user, signOut, updateUser } = useAuth();
 
   const [option, setOption] = useState<"dataEdit" | "passwordEdit">("dataEdit");
   const [avatar, setAvatar] = useState(user?.avatar);
@@ -64,6 +67,48 @@ function Profile() {
     if (result.uri) setAvatar(result.uri);
   }
 
+  async function handleUpdateUser() {
+    try {
+      const schema = Yup.object().shape({
+        driverLicense: Yup.string().required("CNH é obrigatória"),
+        name: Yup.string().required("Nome é obrigatório"),
+      });
+
+      const data = { name, driverLicense };
+
+      await schema.validate(data);
+
+      await updateUser({
+        id: user.id,
+        user_id: user.user_id,
+        email: user.email,
+        token: user.token,
+        driver_license: driverLicense,
+        name,
+        avatar,
+      });
+
+      Alert.alert("Perfil atualizado!");
+    } catch (error: any) {
+      if (error instanceof Yup.ValidationError) {
+        Alert.alert("Opa", error.message);
+      } else {
+        Alert.alert("Não foi possível atualizar o perfil");
+      }
+    }
+  }
+
+  function handleSignOut() {
+    Alert.alert(
+      "Tem certeza?",
+      "Se você sair, irá precisar de internet para conectar-se novamente.",
+      [
+        { text: "Cancelar", onPress: () => {} },
+        { text: "Sair", onPress: () => signOut() },
+      ]
+    );
+  }
+
   return (
     <KeyboardAvoidingView behavior="position" enabled>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -74,7 +119,7 @@ function Profile() {
 
               <HeaderTitle>Editar perfil</HeaderTitle>
 
-              <LogoutButton onPress={signOut}>
+              <LogoutButton onPress={handleSignOut}>
                 <Feather name="power" size={24} color={theme.colors.shape} />
               </LogoutButton>
             </HeaderTop>
@@ -140,6 +185,8 @@ function Profile() {
                 <PasswordInput iconName="lock" placeholder="Repetir senha" />
               </Section>
             )}
+
+            <Button title="Salvar alterações" onPress={handleUpdateUser} />
           </Content>
         </Container>
       </TouchableWithoutFeedback>
