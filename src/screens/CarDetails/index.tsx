@@ -1,4 +1,5 @@
 import React from "react";
+import { StatusBar } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   Extrapolate,
@@ -32,8 +33,8 @@ import Accessory from "../../components/Accessory";
 import Button from "../../components/Button";
 
 import { CarDTO } from "../../dtos/CarDTO";
+
 import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
-import { StatusBar } from "react-native";
 
 interface Params {
   car: CarDTO;

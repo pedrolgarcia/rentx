@@ -17,10 +17,10 @@ import GasolineSvg from "../../assets/gasoline.svg";
 
 import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
 
-import { CarDTO } from "../../dtos/CarDTO";
+import { Car as CarModel } from "../../database/model/Car";
 
 interface Props {
-  data: CarDTO;
+  data: CarModel;
   onPress: () => void;
 }
 
