@@ -60,7 +60,7 @@ function Home() {
     }
   }, [netInfo.isConnected]);
 
-  function handleCarDetails(car: CarDTO) {
+  function handleCarDetails(car: CarModel) {
     navigation.navigate("CarDetails", { car });
   }
 
